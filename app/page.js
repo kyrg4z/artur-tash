@@ -70,11 +70,9 @@ export default async function Home() {
       <section id="about" className={styles.section}>
         <h2 className={styles["section-title"]}>About Me</h2>
         <div className={styles.me}>
-          <div className={styles.me}>
             <Image src="/left.jpg" width={400} height={600} alt="Left" />
             <Image src="/center.jpg" width={500} height={600} alt="Center" />
             <Image src="/bitmap_rc.jpg" width={400} height={600} alt="Right" />
-          </div>
         </div>
 
         <div className={styles["about-content"]}>

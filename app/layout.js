@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Artur Tash",
-  description: "Artur Tashbolotov is a passionate CS enthusiast, startup engineer, photographer and just a cool guy who is interested in math and science.",
+  description: "Artur Tashbolotov is a passionate CS and cybersecurity enthusiast, startup engineer, photographer and just a chill guy who is interested in STEM and entrepreneurship related fields.",
 };
 
 export default function RootLayout({ children }) {

@@ -9,13 +9,19 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'i.postimg.cc',
         port: '',
-        pathname: '/**', // Corrected: Allow all image paths
+        pathname: '/**',
       },
       {
         protocol: 'https',
         hostname: 'raw.githubusercontent.com',
         port: '',
-        pathname: '/**', // Corrected: Allow all image paths
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn1.leapcell.io',
+        port: '',
+        pathname: '/**',
       }
     ],
   },

@@ -1,4 +1,3 @@
-// import { useEffect, useState } from "react";
 import Image from "next/image";
 import styles from "./page.module.css";
 import TechIcons from "@/components/Icons";
@@ -9,39 +8,16 @@ import {
 } from "react-icons/si";
 import { TbBrandAdobeIllustrator } from "react-icons/tb";
 import { executeQuery } from "@/lib/db";
-import "tailwindcss";
+export const revalidate = 10;
 
 export default async function Home() {
-  // const [projects, setProjects] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const response = await fetch('/api/projects');
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       const result = await response.json();
-  //       setProjects(result.data);
-  //     } catch (error) {
-  //       setError(error.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-
-  //   fetchData();
-  // }, []);
   let projects = [];
   let error = null;
-
   try {
     const result = await executeQuery("SELECT * FROM projects");
-    projects = result.rows;
+    projects = Array.isArray(result?.rows) ? result.rows : [];
   } catch (err) {
-    error = err.message;
+    error = err?.message || "Failed to load projects";
   }
   return (
     <div className={styles.container}>
@@ -130,29 +106,48 @@ export default async function Home() {
       <section id="work" className={styles.section}>
         <h2 className={styles["section-title"]}>Projects</h2>
         <div className={styles.grid}>
+          {error && (
+            <div className={styles.card}>
+              <div className={styles["card-content"]}>
+                <h3>Unable to load projects</h3>
+                <p>{error}</p>
+              </div>
+            </div>
+          )}
           {projects.map((project) => (
             <div className={styles.card} key={project.id}>
               <div className={styles["card-content"]}>
-              <Image
-                src={project.image}
-                alt={project.title}
-                width={400}
-                height={500}
-
-              />
-              <h2>{project.title}</h2>
-              <p>{project.description}</p>
-              <p><strong>Technologies:</strong> {project.technologies}</p>
-              <a href={project.url} target="_blank" rel="noopener noreferrer"><b>Live Demo</b></a> <br/>
-              <a href={project.github} target="_blank" rel="noopener noreferrer"> <b> GitHub</b></a>
-            </div>
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  width={400}
+                  height={500}
+                />
+                <h2>{project.title}</h2>
+                <p>{project.description}</p>
+                <p>
+                  <strong>Technologies:</strong> {project.technologies}
+                </p>
+                <a href={project.url} target="_blank" rel="noopener noreferrer">
+                  <b>Live Demo</b>
+                </a>{" "}
+                <br />
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {" "}
+                  <b> GitHub</b>
+                </a>
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      <section id="photography" className={styles.section}>
-        <h2 className={styles["section-title"]}>Photography</h2>
+      {/* <section id="photography" className={styles.section}>
+        <h2 className={styles["section-title"]}>Photography</h2>*/}
         {/* <p className="">Coming soon...</p> */}
         {/* <div className={styles.grid}>
           <div className={styles.card}>
@@ -180,7 +175,7 @@ export default async function Home() {
             </div>
           </div>
         </div> */}
-      </section>
+      {/* </section>*/}
 
       <footer id="contact" className={styles.footer}>
         <p>Get in touch</p>
